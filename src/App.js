@@ -1,45 +1,38 @@
-import "../src/categories.styles.scss"
+import Directory from "./components/directory/directory.component";
 
 const App = () => {
 
-  const categories = [
+      const categories = [
     {
-      title: 'Hats',
-      id: 1
+      "id": 1,
+      "title": "hats",
+      "imageUrl": "https://i.ibb.co/cvpntL1/hats.png"
     },
-     {
-      title: 'Jackets',
-      id: 2
+    {
+      "id": 2,
+      "title": "jackets",
+      "imageUrl": "https://i.ibb.co/px2tCc3/jackets.png"
     },
-      {
-      title: 'Sneakers',
-      id: 3
+    {
+      "id": 3,
+      "title": "sneakers",
+      "imageUrl": "https://i.ibb.co/0jqHpnp/sneakers.png"
     },
-       {
-      title: 'Men',
-      id: 4
+    {
+      "id": 4,
+      "title": "womens",
+      "imageUrl": "https://i.ibb.co/GCCdy8t/womens.png"
     },
-        {
-      title: 'Women',
-      id: 5
-    },
-  ]
+    {
+      "id": 5,
+      "title": "mens",
+      "imageUrl": "https://i.ibb.co/R70vBrQ/men.png"
+    }
+  ];
 
   return (
     <div className="categories-container">
-      {
-      categories.map(({ title, id }) => {
-        return (
-          <div key={ id } className="category-container">
-          {/* <img /> */}
-          <div className="category-body-container">
-              <h2>{ title }</h2>
-              <p>Shop now!</p>
-          </div>
-          </div>
-         )
-        })
-      }
+      <Directory categories={categories} />
     </div>
   );
 }

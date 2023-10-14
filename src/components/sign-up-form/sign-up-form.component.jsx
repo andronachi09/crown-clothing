@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "../../utils/firebase/firebase.utils";
+import FormInput from "../form-input/form-input.component";
 
 const defaultFormFields = {
     displayName: '',
@@ -48,15 +49,35 @@ const SignUpForm = () => {
     return (
         <div>
             <h1>Sign up with your email and password:</h1>
-            <form onSubmit={ handleSubmit}>
-                <label>Display name:</label>
-                <input type="text" required name="displayName" onChange={handleChange} value={ displayName }/>
-                <label>Email:</label>
-                <input type="email" required name="email" onChange={handleChange} value={ email }/>
-                <label>Password:</label>
-                <input type="password" required name="password" onChange={handleChange} value={ password }/>
-                <label>Confirm password:</label>
-                <input type="password" required name="confirmPassword" onChange={handleChange} value={confirmPassword}/>
+            <form onSubmit={handleSubmit}>
+                <FormInput
+                    label="Display name:"
+                    type="text"
+                    required name="displayName"
+                    onChange={handleChange}
+                    value={displayName}
+                />
+                <FormInput
+                    label="Email:"
+                    type="email"
+                    required name="email"
+                    onChange={handleChange}
+                    value={email}
+                />
+                <FormInput
+                    label="Password:"
+                    type="password"
+                    required name="password"
+                    onChange={handleChange}
+                    value={password}
+                />
+                <FormInput
+                    label="Confirm password:"
+                    type="password"
+                    required name="confirmPassword"
+                    onChange={handleChange}
+                    value={confirmPassword}
+                />
                 <button type="submit">Sign up</button>
             </form>
         </div>

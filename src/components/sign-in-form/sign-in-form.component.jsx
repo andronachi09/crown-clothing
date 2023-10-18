@@ -3,7 +3,6 @@ import { useState } from "react";
 import {
     signInWithEmailAndPasswordFirebase,
     signInWithGooglePopup,
-    createUserDocumentFromAuth
 } from "../../utils/firebase/firebase.utils";
 
 import CustomButton from "../custom-button/custom-button.component";

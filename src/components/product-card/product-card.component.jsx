@@ -10,8 +10,6 @@ const ProductCard = ({ product }) => {
 
   const addProductsToCart = () => addProductToCart(product);
 
-  console.log("pe");
-
   return (
     <div className='product-card-container'>
       <img src={imageUrl} alt={`${name}`} />

@@ -6,9 +6,16 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
-    onAuthStateChanged
+    onAuthStateChanged,
 } from 'firebase/auth';
-import { getFirestore, doc, getDoc, setDoc  } from 'firebase/firestore'
+import {
+    getFirestore,
+    doc,
+    getDoc,
+    setDoc,
+    collection,
+    writeBatch,
+} from 'firebase/firestore'
 
 const firebaseConfig = {
   apiKey: "AIzaSyB66xAfZ8yec2wie6BPC0CQHWohSLfcIBw",
@@ -62,3 +69,19 @@ export const createAuthUserWithEmailAndPassword = async (email, password) => {
 export const signOutUser = async () => await signOut(auth);
 
 export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback);
+
+//adding collection and documents for products
+
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+    const collectionRef = collection(db, collectionKey);
+    const batch = writeBatch(db);
+
+    objectsToAdd.forEach((object) => {
+        const docRef = doc(collectionRef, object.title.toLowerCase());
+        batch.set(docRef, object);
+    });
+
+    await batch.commit();
+    console.log('Batch is done.');
+};
+

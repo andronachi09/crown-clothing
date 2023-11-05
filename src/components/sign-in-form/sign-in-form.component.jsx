@@ -8,7 +8,7 @@ import {
 import CustomButton, { BUTTON_TYPE_CLASSES } from "../custom-button/custom-button.component";
 import FormInput from "../form-input/form-input.component";
 
-import "../sign-in-form/sign-in-form.style.scss"
+import { ButtonsContainer, SignInContainer, Title } from "./sign-in-form.style.jsx";
 
 const defaultFormFields = {
     email: '',
@@ -52,8 +52,8 @@ const SignInForm = () => {
     };
 
     return (
-        <div className="sign-in-container">
-            <h2>Already have an account</h2>
+        <SignInContainer>
+            <Title>Already have an account</Title>
             <span>Sign in with email and password.</span>
             <form onSubmit={handleSubmit}>
                 <FormInput
@@ -70,13 +70,12 @@ const SignInForm = () => {
                     onChange={handleChange}
                     value={password}
                 />
-                 <div className="buttons-container">
+                 <ButtonsContainer>
                     <CustomButton type="submit">Sign in</CustomButton>
                     <CustomButton onClick={logGoogleUser} buttonType={BUTTON_TYPE_CLASSES.google} type="button">Google Sign In</CustomButton>
-                </div>
+                </ButtonsContainer>
             </form>
-
-        </div>
+        </SignInContainer>
     );
 };
 

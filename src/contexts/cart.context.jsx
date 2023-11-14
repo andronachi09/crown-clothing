@@ -19,7 +19,7 @@ const CART_ACTIONS = {
 
 const INITIAL_STATE = {
     currentProducts: [],
-    isCartOpen: true,
+    isCartOpen: false,
     cartAmount: 0,
     cartTotal: 0
 };

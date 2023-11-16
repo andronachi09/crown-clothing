@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import {
     signInWithEmailAndPasswordFirebase,
@@ -18,9 +19,11 @@ const defaultFormFields = {
 const SignInForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { email, password } = formFields;
+    const navigate = useNavigate();
 
      const logGoogleUser = async () => {
         await signInWithGooglePopup();
+         navigate("/");
      };
 
     const handleChange = (event) => {

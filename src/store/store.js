@@ -15,9 +15,14 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 //root-reducer, a combination of all reducers. Reducers are pure functions.
 //middle wares a kind of little library helpers, that run before an action hits the reducer.
 //whenever we dispatch an action, before action hits the reducers, it hits the middleware first
-const middleWares = [process.env.NODE_ENV === 'development' &&  loggerMiddleware ].filter(Boolean);
+const middleWares = [process.env.NODE_ENV === 'development' && loggerMiddleware].filter(Boolean);
 
-const composedEnhancers = compose(applyMiddleware(...middleWares));
+const composeEnhancer = (process.env.NODE_ENV !== 'production' &&
+    window &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+compose;
+
+const composedEnhancers = composeEnhancer(applyMiddleware(...middleWares));
 
 export const store = createStore(persistedReducer, undefined, composedEnhancers);
 

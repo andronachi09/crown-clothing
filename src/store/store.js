@@ -1,8 +1,7 @@
-// here we eill generate the store object that we will use inside application
 import { compose, createStore, applyMiddleware } from "redux";
-// import logger from "redux-logger";
-
 import { rootReducer } from "./root-reducer";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
 const loggerMiddleware = (store) => (next) => (action) => {
     if (!action.type) {
@@ -18,11 +17,21 @@ const loggerMiddleware = (store) => (next) => (action) => {
     console.log('next state: ', store.getState());
 };
 
+const persistConfig = {
+    key: 'root',
+    storage,
+    blacklist: ['user']
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 //root-reducer, a combination of all reducers. Reducers are pure functions.
 //middle wares a kind of little library helpers, that run before an action hits the reducer.
-//whenever we dispatch an action, before action hits the reducers, it hits the middl eware first
+//whenever we dispatch an action, before action hits the reducers, it hits the middleware first
 const middleWares = [ loggerMiddleware ];
 
 const composedEnhancers = compose(applyMiddleware(...middleWares));
 
-export const store = createStore(rootReducer, undefined, composedEnhancers);
+export const store = createStore(persistedReducer, undefined, composedEnhancers);
+
+export const persistor = persistStore(store);

@@ -1,14 +1,11 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
-
-import { createUserDocumentFromAuth } from "../../utils/firebase/firebase.utils";
 
 import CustomButton from "../custom-button/custom-button.component";
 import FormInput from "../form-input/form-input.component";
 
 import "./sign-up-form.style.jsx";
 import { SignUpContainer, Title } from "./sign-up-form.style.jsx";
-import { selectCurrentUser } from "../../store/user/user.selector.js";
 import { signUpStart } from "../../store/user/user.action.js";
 
 const defaultFormFields = {

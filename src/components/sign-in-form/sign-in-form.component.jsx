@@ -2,11 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import {
-    signInWithEmailAndPasswordFirebase,
-    signInWithGooglePopup,
-} from "../../utils/firebase/firebase.utils";
-import { googleSignInStart } from "../../store/user/user.action.js";
+import { googleSignInStart, emailSignInStart } from "../../store/user/user.action.js";
 
 import CustomButton, { BUTTON_TYPE_CLASSES } from "../custom-button/custom-button.component";
 import FormInput from "../form-input/form-input.component";
@@ -39,7 +35,8 @@ const SignInForm = () => {
         event.preventDefault();
 
         try {
-            const { user } = await signInWithEmailAndPasswordFirebase(email, password);
+            // const { user } = await signInWithEmailAndPasswordFirebase(email, password);
+            dispatch(emailSignInStart(email, password));
             setFormFields(defaultFormFields);
         } catch (error) {
             switch (error.code) {
@@ -51,6 +48,9 @@ const SignInForm = () => {
                     break
                  case 'auth/invalid-login-credentials':
                     alert("Invalid login credentials");
+                    break
+                 case 'auth/missing-email':
+                    alert("Missing email");
                     break
                 default:
                     console.log(error);

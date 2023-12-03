@@ -4,6 +4,7 @@ import CheckoutItem from "../../components/checkout-item/checkout-item.component
 import "./checkout.styles.jsx";
 import { CheckoutContainer, CheckoutHeader, HeaderBlock, Total } from "./checkout.styles.jsx";
 import { selectCartItems, selectCartTotal } from "../../store/cart/cart.selector.js";
+import PaymentForm from "../../components/payment-form/payment-form.component.jsx";
 
 const Checkout = () => {
     const cartTotal = useSelector(selectCartTotal);
@@ -29,7 +30,8 @@ const Checkout = () => {
                 </HeaderBlock>
             </CheckoutHeader>
             {currentProducts.map((product) => (<CheckoutItem key={product.id} cartItem={product} />))}
-            <Total>Total: ${ cartTotal }</Total>
+            <Total>Total: ${cartTotal}</Total>
+            <PaymentForm />
         </CheckoutContainer>
     );
 };

@@ -7,6 +7,8 @@ import {
     signInWithEmailAndPassword,
     signOut,
     onAuthStateChanged,
+    User,
+    NextOrObserver
 } from 'firebase/auth';
 import {
     getFirestore,
@@ -17,7 +19,9 @@ import {
     writeBatch,
     query,
     getDocs,
+    QueryDocumentSnapshot
 } from 'firebase/firestore'
+import { Category } from '../../store/categories/categories.types';
 
 const firebaseConfig = {
   apiKey: "AIzaSyB66xAfZ8yec2wie6BPC0CQHWohSLfcIBw",
@@ -39,11 +43,27 @@ googleProvider.setCustomParameters({
 
 export const auth = getAuth();
 export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
-export const signInWithEmailAndPasswordFirebase = (email, password) => signInWithEmailAndPassword(auth, email, password);
+export const signInWithEmailAndPasswordFirebase = (
+    email: string,
+    password: string
+) => signInWithEmailAndPassword(auth, email, password);
 
 export const db = getFirestore();
 
-export const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) => {
+export type AdditionalInformation = {
+    displayName?: string
+}
+
+export type UserData = {
+    createdAt: Date
+    displayName: string
+    email: string
+}
+
+export const createUserDocumentFromAuth = async (
+    userAuth: User,
+    additionalInformation = {} as AdditionalInformation
+): Promise<void | QueryDocumentSnapshot<UserData>> => {
     if (!userAuth) return;
 
     const userDocRef = doc(db, 'users', userAuth.uid);
@@ -57,14 +77,14 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInformation
         try {
            await setDoc(userDocRef, { email, displayName, createdAt, ...additionalInformation });
         } catch (error) {
-            console.log("An error ocurred when creating a new user", error.message);
+            console.log("An error ocurred when creating a new user", error);
         }
     }
 
-    return userSnapshot;
+    return userSnapshot as QueryDocumentSnapshot<UserData>;
 };
 
-export const createAuthUserWithEmailAndPassword = async (email, password) => {
+export const createAuthUserWithEmailAndPassword = async (email: string, password: string) => {
     if (!email || !password) return;
 
     return await createUserWithEmailAndPassword(auth, email, password);
@@ -72,10 +92,18 @@ export const createAuthUserWithEmailAndPassword = async (email, password) => {
 
 export const signOutUser = async () => await signOut(auth);
 
-export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback);
+export const onAuthStateChangedListener = (callback: NextOrObserver<User>) => onAuthStateChanged(auth, callback);
 
 //adding collection and documents for products
-export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+
+export type ObjectToAdd = {
+    title: string;
+}
+
+export const addCollectionAndDocuments = async<T extends ObjectToAdd>(
+    collectionKey: string,
+    objectsToAdd: T[],
+): Promise<void> => {
     const collectionRef = collection(db, collectionKey);
     const batch = writeBatch(db);
 
@@ -88,15 +116,17 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => 
     console.log('Batch is done.');
 };
 
-export const getCategoriesAndDocuments = async () => {
+export const getCategoriesAndDocuments = async (): Promise<Category[]> => {
     const collectionRef = collection(db, 'categories');
     const q = query(collectionRef);
 
     const querySnapshot = await getDocs(q);
-    return querySnapshot.docs.map((docSnaphot) => docSnaphot.data());
+    return querySnapshot.docs.map(
+        (docSnaphot) => docSnaphot.data() as Category
+    );
 };
 
-export const getCurrentUser = () => {
+export const getCurrentUser = (): Promise<User | null> => {
     return new Promise((resolve, reject) => {
         const unsubscribe = onAuthStateChanged(
             auth,

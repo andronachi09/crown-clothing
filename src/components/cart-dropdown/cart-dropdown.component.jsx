@@ -5,7 +5,7 @@ import CustomButton from "../custom-button/custom-button.component.jsx";
 import CartItem from "../cart-item/cart-item.component.jsx";
 
 import { CartDropdownContainer, CartItems, EmptyMessage } from "./cart-dropdown.styles";
-import { selectCartItems } from "../../store/cart/cart.selector.js";
+import { selectCartItems } from "../../store/cart/cart.selector.ts";
 
 const CartDropdown = () => {
     const currentProducts = useSelector(selectCartItems);

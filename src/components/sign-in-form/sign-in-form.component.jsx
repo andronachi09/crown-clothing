@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { googleSignInStart, emailSignInStart } from "../../store/user/user.action.js";
+import { googleSignInStart, emailSignInStart } from "../../store/user/user.action.ts";
 
 import CustomButton, { BUTTON_TYPE_CLASSES } from "../custom-button/custom-button.component";
 import FormInput from "../form-input/form-input.component";

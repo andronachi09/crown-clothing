@@ -3,7 +3,7 @@ import CheckoutItem from "../../components/checkout-item/checkout-item.component
 
 import "./checkout.styles.jsx";
 import { CheckoutContainer, CheckoutHeader, HeaderBlock, Total } from "./checkout.styles.jsx";
-import { selectCartItems, selectCartTotal } from "../../store/cart/cart.selector.js";
+import { selectCartItems, selectCartTotal } from "../../store/cart/cart.selector.ts";
 import PaymentForm from "../../components/payment-form/payment-form.component.jsx";
 
 const Checkout = () => {

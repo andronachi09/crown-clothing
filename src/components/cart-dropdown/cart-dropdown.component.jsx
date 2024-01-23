@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import CustomButton from "../custom-button/custom-button.component.jsx";
+import CustomButton from "../custom-button/custom-button.component.tsx";
 import CartItem from "../cart-item/cart-item.component.jsx";
 
 import { CartDropdownContainer, CartItems, EmptyMessage } from "./cart-dropdown.styles";
